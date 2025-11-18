@@ -1,0 +1,47 @@
+import pygame
+
+import random
+WIDTH, HEIGHT = 800, 600
+screen = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Ball Animation - Medium Level")
+
+clock = pygame.time.Clock()
+
+# ویژگی‌های توپ
+x = WIDTH // 2
+y = HEIGHT // 2
+radius = 25
+speed_x = 4
+speed_y = 3
+
+# رنگ تصادفی برای توپ
+color = [random.randint(50, 255) for _ in range(3)]
+
+running = True
+while running:
+    screen.fill((20, 20, 30))  # پس‌زمینه تیره
+
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            running = False
+
+    # حرکت توپ
+    x += speed_x
+    y += speed_y
+
+    # برخورد با دیواره‌ها
+    if x - radius < 0 or x + radius > WIDTH:
+        speed_x = -speed_x
+        color = [random.randint(50, 255) for _ in range(3)]  # تغییر رنگ در برخورد
+
+    if y - radius < 0 or y + radius > HEIGHT:
+        speed_y = -speed_y
+        color = [random.randint(50, 255) for _ in range(3)]  # تغییر رنگ در برخورد
+
+    # رسم توپ
+    pygame.draw.circle(screen, color, (x, y), radius)
+
+    pygame.display.flip()
+    clock.tick(60)
+
+pygame.quit()
